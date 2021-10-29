@@ -39,28 +39,13 @@ namespace API_EntityFramework.Controllers
         }
 
         [HttpGet("name/{Name}")]
-        public Plan FindPlanByName(string Name)
+        public async Task<ActionResult> FindPlanByName(string Name)
         {
             Plan plan = new Plan();
-            switch(Name)
-            {
-                case "Basic":
-                    plan = dataContext.plan.Find(1);
-                break;
-
-                case "Standard":
-                    plan = dataContext.plan.Find(2);
-                break;
-
-                case "Premium":
-                    plan = dataContext.plan.Find(3);
-                break;
-
-                default:
-                    return null;
-            }
-
-            return plan;
+            
+            plan = await dataContext.plan.FirstOrDefaultAsync(x => x.Name == Name);
+                
+            return Ok(plan);
             
         }
         

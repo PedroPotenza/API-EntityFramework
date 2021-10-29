@@ -5,7 +5,7 @@ namespace API_EntityFramework.Models
     public class Plan
     {
         [Key]
-        public int Id { get; set; }
+        public int PlanId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
