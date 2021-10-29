@@ -15,7 +15,7 @@ namespace API_EntityFramework.Controllers
 
         public ClientController(DataContext context)
         {
-            this.dataContext = context; //EXPLICATION: create a constructor specifying the context who will be used
+            this.dataContext = context; //EXPLICATION: create a constructor specifying the data context who will be used
         }
 
         [HttpPost("")]
@@ -37,7 +37,7 @@ namespace API_EntityFramework.Controllers
         }
 
         [HttpGet("{id}")]
-        public Client FindDataContextlient(int id)
+        public Client FindDataContextClient(int id)
         {
             Client client = dataContext.client.Find(id);
             return client;
@@ -54,7 +54,7 @@ namespace API_EntityFramework.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteClient(int id)
         {
-            Client client = FindDataContextlient(id);
+            Client client = FindDataContextClient(id);
 
             if(client == null)
             {

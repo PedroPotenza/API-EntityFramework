@@ -12,6 +12,7 @@ namespace API_EntityFramework.Data
 
         //EXPLICATION: Set what's gonna transforme to tables on DB
         public DbSet<Client> client { get; set; } 
+        public DbSet<Plan> plan { get; set; } 
         
     }
 }
