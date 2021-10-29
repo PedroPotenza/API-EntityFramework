@@ -1,0 +1,18 @@
+
+To update some table that already exists use: dotnet ef migrations add {NameOfMigration}
+Exemple: dotnet ef migrations add AddClientEmail
+
+And make sure to update the database at all using: dotnet ef database update
+
+
+
+
+
+
+
+
+
+
+
+
+

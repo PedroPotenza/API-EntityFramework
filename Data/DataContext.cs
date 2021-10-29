@@ -7,10 +7,11 @@ namespace API_EntityFramework.Data
     public class DataContext :DbContext
     {
         
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {}
+        public DataContext(DbContextOptions<DataContext> options) : base(options) 
+        {} //EXPLICATION: instance of DataConext with some default options (?)
 
-        public DbSet<Client> client { get; set; }
+        //EXPLICATION: Set what's gonna transforme to tables on DB
+        public DbSet<Client> client { get; set; } 
         
     }
 }

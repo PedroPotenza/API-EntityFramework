@@ -6,9 +6,13 @@ namespace API_EntityFramework.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Cidade { get; set; }  
-        public int Idade { get; set; }
-
+        [Required]
+        public string Cpf { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public string DateBirth { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        //missing plan id
     }
 }

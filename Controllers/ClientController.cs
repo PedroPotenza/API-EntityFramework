@@ -8,53 +8,53 @@ namespace API_EntityFramework.Controllers
 {
     [Controller]
     [Route("[controller]")]
-    public class ClientController :ControllerBase
+    public class ClientController : ControllerBase
     {
 
-        private DataContext dc;
+        private DataContext dataContext;
 
         public ClientController(DataContext context)
         {
-            this.dc = context; //aula 12 isso aê
+            this.dataContext = context; //EXPLICATION: create a constructor specifying the context who will be used
         }
 
-        [HttpPost("api")]
-        public async Task<ActionResult> cadastrar([FromBody] Client c)
+        [HttpPost("")]
+        public async Task<ActionResult> RegisterClient([FromBody] Client client)
         {
-            dc.client.Add(c);
-            await dc.SaveChangesAsync();
+            dataContext.client.Add(client);
+            await dataContext.SaveChangesAsync();
 
-            return Created("Objeto Cliente", c );
+            return Created("Objeto Cliente", client );
         }
 
-        [HttpGet("api")]
+        [HttpGet("")]
         public async Task<ActionResult> ShowClients()
         {
             
-            var dados = await dc.client.ToListAsync();
+            var dados = await dataContext.client.ToListAsync();
             return Ok(dados);
 
         }
 
-        [HttpGet("api/{id}")]
-        public Client FindClient(int id)
+        [HttpGet("{id}")]
+        public Client FindDataContextlient(int id)
         {
-            Client client = dc.client.Find(id);
+            Client client = dataContext.client.Find(id);
             return client;
         }
 
-        [HttpPut("api")]
+        [HttpPut("")]
         public async Task<ActionResult> UpdateClient([FromBody] Client client)
         {
-            dc.client.Update(client);
-            await dc.SaveChangesAsync();
+            dataContext.client.Update(client);
+            await dataContext.SaveChangesAsync();
             return Ok(client);
         }
 
-        [HttpDelete("api/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteClient(int id)
         {
-            Client client = FindClient(id);
+            Client client = FindDataContextlient(id);
 
             if(client == null)
             {
@@ -62,8 +62,8 @@ namespace API_EntityFramework.Controllers
             } 
             else
             {
-                dc.client.Remove(client);
-                await dc.SaveChangesAsync();
+                dataContext.client.Remove(client);
+                await dataContext.SaveChangesAsync();
                 return Ok();
             }
 
@@ -75,8 +75,6 @@ namespace API_EntityFramework.Controllers
         {
             return "Hello World";
         }
-
-
 
     }
 }
