@@ -3,14 +3,16 @@ using API_EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API_EntityFramework.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211103120703_AddRoutesGenre")]
+    partial class AddRoutesGenre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,49 +64,6 @@ namespace API_EntityFramework.Migrations
                     b.ToTable("genre");
                 });
 
-            modelBuilder.Entity("API_EntityFramework.Models.GenreMovie", b =>
-                {
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GenreId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("GenreMovie");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.Movie", b =>
-                {
-                    b.Property<int>("MovieId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Director")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Plot")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<int>("year")
-                        .HasColumnType("int");
-
-                    b.HasKey("MovieId");
-
-                    b.ToTable("movie");
-                });
-
             modelBuilder.Entity("API_EntityFramework.Models.Plan", b =>
                 {
                     b.Property<int>("PlanId")
@@ -140,35 +99,6 @@ namespace API_EntityFramework.Migrations
                     b.HasKey("PlanId");
 
                     b.ToTable("plan");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.GenreMovie", b =>
-                {
-                    b.HasOne("API_EntityFramework.Models.Genre", "Genre")
-                        .WithMany("GenreMovie")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_EntityFramework.Models.Movie", "Movie")
-                        .WithMany("GenreMovie")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Genre");
-
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.Genre", b =>
-                {
-                    b.Navigation("GenreMovie");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.Movie", b =>
-                {
-                    b.Navigation("GenreMovie");
                 });
 #pragma warning restore 612, 618
         }

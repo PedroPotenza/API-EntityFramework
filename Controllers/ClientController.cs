@@ -24,15 +24,15 @@ namespace API_EntityFramework.Controllers
             dataContext.client.Add(client);
             await dataContext.SaveChangesAsync();
 
-            return Created("Objeto Cliente", client );
+            return Created("Object Cliente created!", client );
         }
 
         [HttpGet("")]
         public async Task<ActionResult> ShowClients()
         {
             
-            var dados = await dataContext.client.ToListAsync();
-            return Ok(dados);
+            var data = await dataContext.client.ToListAsync();
+            return Ok(data);
 
         }
 

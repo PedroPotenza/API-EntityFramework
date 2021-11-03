@@ -6,18 +6,18 @@ namespace API_EntityFramework.Models
 {
     public class Genre
     {
-        public Genre()
-        {
-            this.Movies = new HashSet<Movie>();
-        }
+        // public Genre()
+        // {
+        //     this.Movies = new HashSet<Movie>();
+        // }
 
         [Key]
         public int GenreId { get; set; }
         public string Name { get; set; }
-        [ForeignKey("MovieFK")]
-        public virtual  ICollection<Movie> Movies { get; set; }
+        //[ForeignKey("MovieFK")]
+        public IList<GenreMovie> GenreMovie { get; set; }
         
-        // IDEA: maybe a bool IsSubGenre? 
-        // IDEA: and a GenreFatherFK? 
+        //IDEA: maybe a bool IsSubGenre? 
+        //IDEA: and a GenreFatherFK? 
     }
 }

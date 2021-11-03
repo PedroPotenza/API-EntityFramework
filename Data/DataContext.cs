@@ -1,7 +1,5 @@
-using System.Reflection.Emit;
 using API_EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace API_EntityFramework.Data
 {
@@ -15,20 +13,12 @@ namespace API_EntityFramework.Data
         public DbSet<Client> client { get; set; } 
         public DbSet<Plan> plan { get; set; } 
         public DbSet<Genre> genre { get; set; }
+        public DbSet<Movie> movie { get; set; }
+        public DbSet<GenreMovie> GenreMovie { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.Entity<Genre>()
-                        .HasMany<Movie>(m => m.Movies)
-                        .WithMany(g => g.Genres)
-                        .Map(gm =>
-                                {
-                                    gm.MapLeftKey("GenreRefId");
-                                    gm.MapRightKey("MovieRefId");
-                                    gm.ToTable("GenreMovie");
-                                });
-
+            modelBuilder.Entity<GenreMovie>().HasKey(gm => new { gm.GenreId, gm.MovieId });
         }
         
     }
