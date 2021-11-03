@@ -4,14 +4,16 @@ using API_EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API_EntityFramework.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211103175643_Add_Contract_History_Registers")]
+    partial class Add_Contract_History_Registers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,29 +50,6 @@ namespace API_EntityFramework.Migrations
                     b.ToTable("client");
                 });
 
-            modelBuilder.Entity("API_EntityFramework.Models.Contract", b =>
-                {
-                    b.Property<int>("ContractId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("PlanId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ContractId");
-
-                    b.HasIndex("PlanId");
-
-                    b.ToTable("contract");
-                });
-
             modelBuilder.Entity("API_EntityFramework.Models.Genre", b =>
                 {
                     b.Property<int>("GenreId")
@@ -84,52 +63,6 @@ namespace API_EntityFramework.Migrations
                     b.HasKey("GenreId");
 
                     b.ToTable("genre");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.History", b =>
-                {
-                    b.Property<int>("HistoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ContractId")
-                        .HasColumnType("int");
-
-                    b.HasKey("HistoryId");
-
-                    b.HasIndex("ContractId")
-                        .IsUnique();
-
-                    b.ToTable("history");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.HistoryRegister", b =>
-                {
-                    b.Property<int>("HistoryRegisterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("HistoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("StopTime")
-                        .HasColumnType("time");
-
-                    b.Property<DateTime>("WatchDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("HistoryRegisterId");
-
-                    b.HasIndex("HistoryId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("historyRegister");
                 });
 
             modelBuilder.Entity("API_EntityFramework.Models.Movie", b =>
@@ -212,41 +145,6 @@ namespace API_EntityFramework.Migrations
                     b.ToTable("GenreMovie");
                 });
 
-            modelBuilder.Entity("API_EntityFramework.Models.Contract", b =>
-                {
-                    b.HasOne("API_EntityFramework.Models.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId");
-
-                    b.Navigation("Plan");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.History", b =>
-                {
-                    b.HasOne("API_EntityFramework.Models.Contract", "Contract")
-                        .WithOne("History")
-                        .HasForeignKey("API_EntityFramework.Models.History", "ContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contract");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.HistoryRegister", b =>
-                {
-                    b.HasOne("API_EntityFramework.Models.History", "History")
-                        .WithMany()
-                        .HasForeignKey("HistoryId");
-
-                    b.HasOne("API_EntityFramework.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId");
-
-                    b.Navigation("History");
-
-                    b.Navigation("Movie");
-                });
-
             modelBuilder.Entity("GenreMovie", b =>
                 {
                     b.HasOne("API_EntityFramework.Models.Genre", null)
@@ -260,11 +158,6 @@ namespace API_EntityFramework.Migrations
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.Contract", b =>
-                {
-                    b.Navigation("History");
                 });
 #pragma warning restore 612, 618
         }

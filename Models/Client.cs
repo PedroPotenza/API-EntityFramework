@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace API_EntityFramework.Models
 {
@@ -11,7 +12,7 @@ namespace API_EntityFramework.Models
         public string Cpf { get; set; }
         [Required]
         public string Name { get; set; }
-        public string DateBirth { get; set; }
+        public DateTime DateBirth { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         //[ForeignKey("Plan")]

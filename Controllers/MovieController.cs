@@ -14,7 +14,7 @@ namespace API_EntityFramework.Controllers
 
     [Controller]
     [Route("[controller]")]
-    public class MovieController :ControllerBase
+    public class MovieController : ControllerBase
     {
         private DataContext dataContext;
 
@@ -26,6 +26,9 @@ namespace API_EntityFramework.Controllers
         [HttpPost("")]
         public async Task<ActionResult> RegisterMovie([FromBody] Movie movie)
         {
+            //ROUTES FOR MANY TO MANY 
+            //https://softdevpractice.com/blog/many-to-many-ef-core/
+            
             dataContext.movie.Add(movie);
             await dataContext.SaveChangesAsync();
             return Created("Object \"Movie\" created!", movie);

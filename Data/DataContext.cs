@@ -14,12 +14,23 @@ namespace API_EntityFramework.Data
         public DbSet<Plan> plan { get; set; } 
         public DbSet<Genre> genre { get; set; }
         public DbSet<Movie> movie { get; set; }
-        public DbSet<GenreMovie> GenreMovie { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<GenreMovie>().HasKey(gm => new { gm.GenreId, gm.MovieId });
-        }
-        
+        public DbSet<Contract> contract { get; set; }
+        public DbSet<History> history { get; set; }
+        public DbSet<HistoryRegister> historyRegister { get; set; }
+
+        // public override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     modelBuilder.Entity<GenreMovie>()
+        //         .HasOne(g => g.Genre)
+        //         .WithMany(gm => gm.GenreMovie)
+        //         .HasForeignKey(gi => gi.GenreId);
+
+        //     modelBuilder.Entity<GenreMovie>()
+        //         .HasOne(g => g.Movie)
+        //         .WithMany(gm => gm.GenreMovie)
+        //         .HasForeignKey(gi => gi.MovieId);
+        // }
+        // reference: https://www.youtube.com/watch?v=Qh2hgIc90y0
     }
 }

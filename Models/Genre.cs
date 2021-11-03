@@ -15,7 +15,8 @@ namespace API_EntityFramework.Models
         public int GenreId { get; set; }
         public string Name { get; set; }
         //[ForeignKey("MovieFK")]
-        public IList<GenreMovie> GenreMovie { get; set; }
+        public ICollection<Movie> Movie { get; set; }
+        //reference: https://henriquesd.medium.com/entity-framework-core-5-0-many-to-many-relationships-52c6c8b07b6e
         
         //IDEA: maybe a bool IsSubGenre? 
         //IDEA: and a GenreFatherFK? 
