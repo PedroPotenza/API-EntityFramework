@@ -3,6 +3,7 @@ using API_EntityFramework.Data;
 using API_EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace API_EntityFramework.Controllers
 {
@@ -33,7 +34,7 @@ namespace API_EntityFramework.Controllers
         [HttpGet("{Id}")]
         public Genre FindGenre(int Id)
         {
-            Genre genre = dataContext.genre.Find(Id);
+            Genre genre = dataContext.genre.Find(Id);  
             return genre;
         }
 

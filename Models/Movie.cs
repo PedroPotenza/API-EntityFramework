@@ -23,8 +23,8 @@ namespace API_EntityFramework.Models
         public int Year { get; set; }
         public string Director { get; set; }
         public MovieRating Rating { get; set; }
-        //[ForeignKey("MovieFK")]
-        public ICollection<Genre> Genre { get; set; }
+
+        public ICollection<GenreMovie> Genres { get; set; }
         //reference: https://henriquesd.medium.com/entity-framework-core-5-0-many-to-many-relationships-52c6c8b07b6e
         
     }

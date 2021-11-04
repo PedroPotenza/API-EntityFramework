@@ -4,14 +4,16 @@ using API_EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API_EntityFramework.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211104134304_GenreMovie_is_Back_baby")]
+    partial class GenreMovie_is_Back_baby
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,21 +86,6 @@ namespace API_EntityFramework.Migrations
                     b.HasKey("GenreId");
 
                     b.ToTable("genre");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.GenreMovie", b =>
-                {
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GenreId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("genreMovies");
                 });
 
             modelBuilder.Entity("API_EntityFramework.Models.History", b =>
@@ -212,6 +199,21 @@ namespace API_EntityFramework.Migrations
                     b.ToTable("plan");
                 });
 
+            modelBuilder.Entity("GenreMovie", b =>
+                {
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GenreId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("GenreMovie");
+                });
+
             modelBuilder.Entity("API_EntityFramework.Models.Contract", b =>
                 {
                     b.HasOne("API_EntityFramework.Models.Plan", "Plan")
@@ -219,25 +221,6 @@ namespace API_EntityFramework.Migrations
                         .HasForeignKey("PlanId");
 
                     b.Navigation("Plan");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.GenreMovie", b =>
-                {
-                    b.HasOne("API_EntityFramework.Models.Genre", "Genre")
-                        .WithMany("Movies")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_EntityFramework.Models.Movie", "Movie")
-                        .WithMany("Genres")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Genre");
-
-                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("API_EntityFramework.Models.History", b =>
@@ -266,19 +249,24 @@ namespace API_EntityFramework.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("GenreMovie", b =>
+                {
+                    b.HasOne("API_EntityFramework.Models.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API_EntityFramework.Models.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("API_EntityFramework.Models.Contract", b =>
                 {
                     b.Navigation("History");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.Genre", b =>
-                {
-                    b.Navigation("Movies");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.Movie", b =>
-                {
-                    b.Navigation("Genres");
                 });
 #pragma warning restore 612, 618
         }

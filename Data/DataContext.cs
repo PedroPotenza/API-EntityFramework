@@ -15,6 +15,8 @@ namespace API_EntityFramework.Data
         public DbSet<Genre> genre { get; set; }
         public DbSet<Movie> movie { get; set; }
 
+        public DbSet<GenreMovie> genreMovies { get; set; }
+
         public DbSet<Contract> contract { get; set; }
         public DbSet<History> history { get; set; }
         public DbSet<HistoryRegister> historyRegister { get; set; }
@@ -32,5 +34,13 @@ namespace API_EntityFramework.Data
         //         .HasForeignKey(gi => gi.MovieId);
         // }
         // reference: https://www.youtube.com/watch?v=Qh2hgIc90y0
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<GenreMovie>().HasKey(i => new {i.GenreId, i.MovieId });
+            
+        }
     }
 }

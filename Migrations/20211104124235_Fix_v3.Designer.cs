@@ -4,14 +4,16 @@ using API_EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API_EntityFramework.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211104124235_Fix_v3")]
+    partial class Fix_v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,27 +80,17 @@ namespace API_EntityFramework.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GenreId");
 
-                    b.ToTable("genre");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.GenreMovie", b =>
-                {
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GenreId", "MovieId");
-
                     b.HasIndex("MovieId");
 
-                    b.ToTable("genreMovies");
+                    b.ToTable("genre");
                 });
 
             modelBuilder.Entity("API_EntityFramework.Models.History", b =>
@@ -221,23 +213,11 @@ namespace API_EntityFramework.Migrations
                     b.Navigation("Plan");
                 });
 
-            modelBuilder.Entity("API_EntityFramework.Models.GenreMovie", b =>
+            modelBuilder.Entity("API_EntityFramework.Models.Genre", b =>
                 {
-                    b.HasOne("API_EntityFramework.Models.Genre", "Genre")
-                        .WithMany("Movies")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_EntityFramework.Models.Movie", "Movie")
+                    b.HasOne("API_EntityFramework.Models.Movie", null)
                         .WithMany("Genres")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Genre");
-
-                    b.Navigation("Movie");
+                        .HasForeignKey("MovieId");
                 });
 
             modelBuilder.Entity("API_EntityFramework.Models.History", b =>
@@ -269,11 +249,6 @@ namespace API_EntityFramework.Migrations
             modelBuilder.Entity("API_EntityFramework.Models.Contract", b =>
                 {
                     b.Navigation("History");
-                });
-
-            modelBuilder.Entity("API_EntityFramework.Models.Genre", b =>
-                {
-                    b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("API_EntityFramework.Models.Movie", b =>
