@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API_EntityFramework.Data;
 using API_EntityFramework.Models;
@@ -34,14 +36,37 @@ namespace API_EntityFramework.Controllers
 
             dataContext.genreMovies.Add(GenreMovie);
             await dataContext.SaveChangesAsync();
-            return Ok("Genre \""+ GenreMovie.Genre.Name +"\" add to\""+ GenreMovie.Movie.Name +"\"!");
+            return Ok("Genre \"" + GenreMovie.Genre.Name + "\" add to\"" + GenreMovie.Movie.Name + "\"!");
 
         }
 
-        // public async Task<ActionResult> ShowAllGenreMovie()
-        // {
-        //     var list = await dataContext.genre
-        // }
+        [HttpGet("genre/{LookingGenreId}")]
+        public async Task<ActionResult> FindAllMovieOfGenre(int LookingGenreId)
+        {
+            var MoviesWithSpecifcGenre = await dataContext.genreMovies.Where(gm => gm.GenreId == LookingGenreId).ToListAsync();
+            
+            List<int> MoviesListId = new List<int>();
+            foreach(GenreMovie data in MoviesWithSpecifcGenre)
+            {
+                MoviesListId.Add(data.MovieId);
+            }
+
+            return Ok(MoviesListId);
+        }
+
+        [HttpGet("movie/{LookingMovieId}")]
+        public async Task<ActionResult> FindAllGenreOfMovie(int LookingMovieId)
+        {
+            var GenresOfMovie = await dataContext.genreMovies.Where(gm => gm.MovieId == LookingMovieId).ToListAsync();
+
+            List<int> GenreListId = new List<int>();
+            foreach(GenreMovie data in GenresOfMovie)
+            {
+                GenreListId.Add(data.GenreId);
+            }
+
+            return Ok(GenreListId);
+        }
     }
 
 

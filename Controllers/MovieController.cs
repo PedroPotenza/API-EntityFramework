@@ -54,7 +54,7 @@ namespace API_EntityFramework.Controllers
         {
             dataContext.movie.Update(movie);
             await dataContext.SaveChangesAsync();
-            return Ok("Update successful!");
+            return Ok("Update success!");
         }
 
         [HttpDelete("{Id}")]
