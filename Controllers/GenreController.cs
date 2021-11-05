@@ -4,6 +4,7 @@ using API_EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace API_EntityFramework.Controllers
 {
@@ -28,13 +29,17 @@ namespace API_EntityFramework.Controllers
         public async Task<ActionResult> ShowGenre()
         {
             var genres = await dataContext.genre.ToListAsync();
+            foreach(Genre genre in genres)
+                genre.Movies = new List<GenreMovie>();
+
             return Ok(genres);
         }
 
         [HttpGet("{Id}")]
         public Genre FindGenre(int Id)
         {
-            Genre genre = dataContext.genre.Find(Id);  
+            Genre genre = dataContext.genre.Find(Id);
+            genre.Movies = new List<GenreMovie>();
             return genre;
         }
 
