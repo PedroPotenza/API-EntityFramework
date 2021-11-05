@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API_EntityFramework.Data;
 using API_EntityFramework.Models;
@@ -47,6 +49,32 @@ namespace API_EntityFramework.Controllers
         {
             Movie movie = dataContext.movie.Find(Id);
             return movie;
+        }
+
+        [HttpGet("{LookingMovieId}/genres/{showIds}")]
+        public async Task<ActionResult> FindAllGenresOfMovie(int LookingMovieId, bool showIds)
+        {
+
+            //get specific movie with all genres
+            var movieIncludingGenres = await dataContext.movie.Include(Movie => Movie.Genres).ThenInclude(row => row.Genre).FirstAsync(movie => movie.MovieId == LookingMovieId);
+            
+            //get all genres of movie
+            var movieGenres = movieIncludingGenres.Genres.Select(row => row.Genre);
+            
+            List<int> GenreIds = new List<int>();
+            List<string> GenreNames = new List<string>();
+            
+            foreach(Genre genre in movieGenres)
+            {
+                GenreIds.Add(genre.GenreId);
+                GenreNames.Add(genre.Name);
+            }
+                
+            if(showIds)
+                return Ok(GenreIds);
+            else
+                return Ok(GenreNames);
+
         }
 
         [HttpPut("")]
