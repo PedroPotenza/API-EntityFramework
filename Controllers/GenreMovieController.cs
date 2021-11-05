@@ -5,8 +5,6 @@ using API_EntityFramework.Data;
 using API_EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace API_EntityFramework.Controllers
 {

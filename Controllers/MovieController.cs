@@ -5,6 +5,11 @@ using API_EntityFramework.Data;
 using API_EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+    public class GenreIdAndName 
+    {
+        public int GenreId { get; set; }
+        public string Name { get; set; }
+    }
 
 namespace API_EntityFramework.Controllers
 {
@@ -13,6 +18,7 @@ namespace API_EntityFramework.Controllers
     //OK: POST 
     //OK: PUT 
     //OK: DELETE 
+    
 
     [Controller]
     [Route("[controller]")]
@@ -51,7 +57,7 @@ namespace API_EntityFramework.Controllers
             return movie;
         }
 
-        [HttpGet("{LookingMovieId}/genres/{showIds}")]
+        [HttpGet("{LookingMovieId}/genres")]
         public async Task<ActionResult> FindAllGenresOfMovie(int LookingMovieId, bool showIds)
         {
 
@@ -60,21 +66,18 @@ namespace API_EntityFramework.Controllers
             
             //get all genres of movie
             var movieGenres = movieIncludingGenres.Genres.Select(row => row.Genre);
-            
-            List<int> GenreIds = new List<int>();
-            List<string> GenreNames = new List<string>();
+            List<GenreIdAndName> Response = new List<GenreIdAndName>();
             
             foreach(Genre genre in movieGenres)
             {
-                GenreIds.Add(genre.GenreId);
-                GenreNames.Add(genre.Name);
+                GenreIdAndName temp = new GenreIdAndName();
+                temp.GenreId = genre.GenreId;
+                temp.Name = genre.Name;
+                Response.Add(temp);
             }
-                
-            if(showIds)
-                return Ok(GenreIds);
-            else
-                return Ok(GenreNames);
 
+            return Ok(Response);    
+            
         }
 
         [HttpPut("")]
